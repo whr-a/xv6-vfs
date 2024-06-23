@@ -33,6 +33,7 @@ struct super_block {
 };
 
 struct file {
+  enum { FD_NONE, FD_PIPE, FD_INODE, FD_DEVICE } type;
   struct filesystem_operations *op;
   // Reference count
   int ref;
@@ -43,7 +44,7 @@ struct file {
   struct inode *inode;
   void *private;
 };
-
+                                                   
 struct inode {
   struct filesystem_operations *op;
   // Which mounted fs does this inode belong to?
@@ -58,7 +59,7 @@ struct inode {
   uint dev;
   uint size;
   short nlink;
-  void *private;
+  void *private;                                                                                                                                                                                                           
 };
 
 #define DIRSIZ 14
@@ -90,7 +91,7 @@ struct filesystem_operations {
   int (*umount) (struct super_block *sb);
   // Allocate an inode in the inode table on disk.
   // Linux: super_operations->alloc_inode
-  struct inode *(*alloc_inode) (struct super_block *sb);
+  struct inode *(*alloc_inode) (struct super_block *sb, short type);
   // Write (update) an existing inode.
   // Linux: super_operations->write_inode
   void (*write_inode) (struct inode *ino);
@@ -140,6 +141,8 @@ struct filesystem_operations {
   // initialize filesystem type
   // Linux: (none)
   void (*init) (void);
+
+  void (*read_block) (struct inode *ip);
 };
 
 // map major device number to device functions.

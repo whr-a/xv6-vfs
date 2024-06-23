@@ -291,7 +291,7 @@ void
 truncate1(char *s)
 {
   char buf[32];
-  
+
   unlink("truncfile");
   int fd1 = open("truncfile", O_CREATE|O_WRONLY|O_TRUNC);
   write(fd1, "abcd", 4);

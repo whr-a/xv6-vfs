@@ -61,3 +61,6 @@ struct xv6fs_dentry {
   char name[DIRSIZ];
 };
 
+extern struct filesystem_operations xv6fs_op;
+extern struct filesystem_type xv6fs_type;
+extern struct xv6fs_super_block sb;

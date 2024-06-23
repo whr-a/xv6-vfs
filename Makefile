@@ -28,7 +28,7 @@ OBJS = \
   $K/fs/xv6fs/fs.o \
   $K/fs/xv6fs/file.o \
   $K/fs/xv6fs/bio.o \
-
+  $K/fs/vfs.o \
 # riscv64-unknown-elf- or riscv64-linux-gnu-
 # perhaps in /opt/riscv/bin
 #TOOLPREFIX = 

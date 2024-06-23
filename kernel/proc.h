@@ -4,7 +4,8 @@
 #include "riscv.h"
 #include "spinlock.h"
 #include "types.h"
-
+int either_copyout(int user_dst, uint64 dst, void *src, uint64 len);
+int either_copyin(void *dst, int user_src, uint64 src, uint64 len);
 // Saved registers for kernel context switches.
 struct context {
   uint64 ra;
@@ -108,7 +109,7 @@ struct proc {
   pagetable_t pagetable;       // User page table
   struct trapframe *trapframe; // data page for trampoline.S
   struct context context;      // swtch() here to run process
-  struct xv6fs_file *ofile[NOFILE];  // Open files
-  struct xv6fs_inode *cwd;           // Current directory
+  struct file *ofile[NOFILE];  // Open files
+  struct inode *cwd;           // Current directory
   char name[16];               // Process name (debugging)
 };
